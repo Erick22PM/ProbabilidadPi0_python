@@ -212,17 +212,17 @@ def OperacionesMatriciales():#__________________________________________________
             vectorResultado = FuncionRecursiva(vectorAux, matrizAux, parametros[3])
             
             if parametros[2]==0:
-                print("El resultado es: " + str(vectorResultado[0]))
+                print(f"El la probabilidad de ir de {parametros[1]} a {parametros[2]} en {parametros[3]} periodos es: " + str(vectorResultado[0]))
             elif parametros[2]==1:
-                print("El resultado es: " + str(vectorResultado[1]))
+                print(f"El la probabilidad de ir de {parametros[1]} a {parametros[2]} en {parametros[3]} periodos es: " + str(vectorResultado[1]))
             elif parametros[2]==2:
-                print("El resultado es: " + str(vectorResultado[2]))
+                print(f"El la probabilidad de ir de {parametros[1]} a {parametros[2]} en {parametros[3]} periodos es: " + str(vectorResultado[2]))
             if parametros[2]==3:
-                print("El resultado es: " + str(vectorResultado[3]))
+                print(f"El la probabilidad de ir de {parametros[1]} a {parametros[2]} en {parametros[3]} periodos es: " + str(vectorResultado[3]))
             if parametros[2]==4:
-                print("El resultado es: " + str(vectorResultado[4]))
+                print(f"El la probabilidad de ir de {parametros[1]} a {parametros[2]} en {parametros[3]} periodos es: " + str(vectorResultado[4]))
             if parametros[2]==5:
-                print("El resultado es: " + str(vectorResultado[5]))
+                print(f"El la probabilidad de ir de {parametros[1]} a {parametros[2]} en {parametros[3]} periodos es: " + str(vectorResultado[5]))
 
         else:
             print("Tienes que colocar un mayor a 0 para realizar las operaciones con Pi0, prueba modificando dicho valor")
