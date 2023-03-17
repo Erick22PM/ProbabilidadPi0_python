@@ -37,7 +37,7 @@ def MenuPrincipal():#______________________________________________________F_IMP
     global ver
     LimpiarPantalla()
     print(Fore.BLUE +"█████████████████████████████████████████████" + Fore.RESET)
-    print(Fore.BLUE + "████████████████████" + Fore.RESET + Style.BRIGHT + "Menu" + Fore.RESET + Fore.BLUE + "█████████████████████" + Fore.RESET)
+    print(Fore.BLUE + "████████████████████" + Fore.RESET + "Menu" + Fore.BLUE + "█████████████████████" + Fore.RESET)
     print(Fore.BLUE + "██" + Fore.RESET +"Imprimir datos capturados ........... (0)" + Fore.BLUE + "██" + Fore.RESET)
     
     if ver == 0:
@@ -79,34 +79,43 @@ def ImprMatriz():#______________________________________________________F_IMPR13
             for j in range(NumeroDeEstados):
                 print("["+str(matrizP[i][j])+"]", end=" ")
             print("\n")
+    else:
+        print("No se ha ingresado el numero de estados, por lo tanto, no existe la matriz P...")
 
 def ImprPI0():#______________________________________________________F_IMPR4
     if NumeroDeEstados!=0:
         if EstadoInicial!=-1:
-            if EstadoInicial==0:
-                print("[1,0,0,0]")
-            elif EstadoInicial==0:
-                print("[0,1,0,0]")
-            elif EstadoInicial==0:
-                print("[0,0,1,0]")
-            elif EstadoInicial==0:
-                print("[0,0,0,1]")
+            print("[", end = '')
+            for i in range(NumeroDeEstados):
+                if i<NumeroDeEstados-1:
+                    if i == EstadoInicial:
+                        print("1", end = ',')
+                    else:
+                        print("0", end = ',')
+                else:
+                    if i == EstadoInicial:
+                        print("1", end = '')
+                    else:
+                        print("0", end = '')
+            print("]")
+        else:
+            print("No se ha ingresado el estado inicial, por lo tanto no existe el vector PI0...")
     else:
-        print("No se ha ingresado el estado inicial, por lo tanto no existe el vector PI0...")
+        print("No se ha ingresado el numero de estados, por lo tanto no existe el vector PI0...")
     
 def ImprimirDatos():#______________________________________________________F_IMPR5
 #Funcion para imprimir los datos capturados por el usuario
     LimpiarPantalla()
-    print(Fore.BLUE +"█████████████████████████████████████████████" + Fore.RESET)
-    print("Numero de estados: " + str(NumeroDeEstados))
-    print("Estado inicial: " + str(EstadoInicial))
-    print("Estado final: " + str(EstadoFinal))
-    print("Numero de periodos: " + str(NumeroDePeriodos))
-    print(Fore.BLUE +"█████████████████████████████████████████████\n" + Fore.RESET)
+    print(Fore.BLUE +"████████████████████████████████████████████████████" + Fore.RESET)
+    print(Fore.BLUE +"██" + Fore.RESET + "Numero de estados: " + str(NumeroDeEstados))
+    print(Fore.BLUE +"██" + Fore.RESET + "Estado inicial: " + str(EstadoInicial))
+    print(Fore.BLUE +"██" + Fore.RESET + "Estado final: " + str(EstadoFinal))
+    print(Fore.BLUE +"██" + Fore.RESET + "Numero de periodos: " + str(NumeroDePeriodos))
+    print(Fore.BLUE +"████████████████████████████████████████████████████\n" + Fore.RESET)
     ImprMatriz()
-    print(Fore.BLUE +"█████████████████████████████████████████████" + Fore.RESET)
+    print(Fore.BLUE +"████████████████████████████████████████████████████" + Fore.RESET)
     ImprPI0()
-    print(Fore.BLUE +"█████████████████████████████████████████████" + Fore.RESET)
+    print(Fore.BLUE +"████████████████████████████████████████████████████" + Fore.RESET)
     input("Presiona una tecla para continuar...")
 
 def ModMatriz(x):#______________________________________________________F_Matrix3
@@ -282,8 +291,19 @@ def ModNumeroDePeriodos():
             NumeroDePeriodos = int(aux2)
     aux1 = False
 
+def FuncionRecursivaPrimeraVEZ(EstadoInicial, EstadoFinal, NumeroDePeriodos):
+    if NumeroDePeriodos == 1:
+        return ObtenerProbabilidadDeNperidodos(EstadoInicial, EstadoFinal, NumeroDePeriodos)
+    else:
+        valorRecursivo = 0
+        for i in range(1, NumeroDePeriodos):
+            valorRecursivo += FuncionRecursivaPrimeraVEZ(EstadoInicial, EstadoFinal, i)*ObtenerProbabilidadDeNperidodos(EstadoFinal, EstadoFinal, NumeroDePeriodos-i)
+        #print(str(ObtenerProbabilidadDeNperidodos(EstadoInicial, EstadoFinal, NumeroDePeriodos)), " - ", str(valorRecursivo)) #-Muestra las operaciones que se hacen
+        return ObtenerProbabilidadDeNperidodos(EstadoInicial, EstadoFinal, NumeroDePeriodos) - valorRecursivo
+
 def ProbabilidadDePrimeraVez(): #Crear la funcion que haga las operaciones
-    print("holA")
+    print("La probabilidad de ir del estado ", str(EstadoInicial), " al estado ", str(EstadoFinal)," por primera vez en ", str(NumeroDePeriodos)," periodos de tiempo es de: ", str(FuncionRecursivaPrimeraVEZ(EstadoInicial, EstadoFinal, NumeroDePeriodos))) 
+    input("Presiona un boton para continuar...")
 
 #________________________________________________________________________________MAIN
 
@@ -333,7 +353,7 @@ while usuarioMenu != 7:
         ModNumeroDePeriodos()
     elif usuarioMenu==6:
         if EstadoInicial!=-1 and EstadoFinal!=-1 and NumeroDeEstados!=0:
-            print(ObtenerProbabilidadDeNperidodos(EstadoInicial, EstadoFinal,NumeroDePeriodos)) #Imprime la probabilidad de ir del EstadoInicial al EstadoFinal en NumeroDePeridos periodos de tiempo (Por lo mientras, luego se colocara la funcion de primera vez)
-            input("Presiona un boton para continuar...")
+            ProbabilidadDePrimeraVez()
+            
 
 #________________________________________________________________________________MAIN
